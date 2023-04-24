@@ -1,5 +1,4 @@
-import com.sunsum.thread.Account;
-import com.sunsum.thread.MyThread;
+import com.sunsum.thread.*;
 
 public class Main {
 
@@ -45,10 +44,39 @@ public class Main {
         System.out.println(account.getAmount());
     }
 
+    public static void producerConsumer(){
+
+        for (int i=0;i<=10;i++){
+            Queue queue = new Queue();
+            Consumer ct = new Consumer(queue);
+            Producer pt = new Producer(queue, "Data copy-"+i);
+            ct.start();
+            pt.start();
+        }
+
+    }
+
+    public static void reentrantLockDemo() throws InterruptedException {
+        Display display = new Display();
+        DisplayThread dsth1 = new DisplayThread("Summy",display);
+        DisplayThread dsth2 = new DisplayThread("Shilpa Saurav", display);
+        dsth1.start();
+        dsth2.start();
+        Thread.sleep(1000);
+        System.out.println(Display.lock.hasQueuedThreads());
+        System.out.println(Display.lock.getHoldCount());
+        System.out.println(Display.lock.isHeldByCurrentThread());
+
+
+    }
+
     public static void main(String[] args) throws InterruptedException{
         //threadDemo();
         //credit();
-        transaction();
+        //transaction();
+        //producerConsumer();
+        reentrantLockDemo();
+        
     }
 
 }
